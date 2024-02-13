@@ -75,6 +75,6 @@
           sudo systemctl start docker
           sudo systemctl enable docker
           sudo docker login --username hokonkwo29 --password dckr_pat_Ax3ty6gVJ3IYfLUn2L-JFM_HZo4
-          sudo docker pull hokonkwo29/2048
+          sudo docker pull hokonkwo29/2048:latest
           sudo docker run -d --name 2048 -p 3000:3000 hokonkwo29/2048:latest
       register: ec2
