@@ -74,5 +74,6 @@
           sudo apt install docker.io -y
           sudo systemctl start docker
           sudo systemctl enable docker
+          docker pull hokonkwo29/2048
           sudo docker run -d --name 2048 -p 3000:3000 hokonkwo29/2048:latest
       register: ec2
