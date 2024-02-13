@@ -1,0 +1,76 @@
+---
+- name: Deleting EC2 instance and security group
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    region: us-east-2
+    security_group: ansible_ec2_security
+    instance_name: harry-ec2
+  tasks:
+    - name: Terminate EC2 instance
+      amazon.aws.ec2_instance:
+        region: "{{ region }}"
+        filters:
+          instance-state-name: running
+          "tag:Name": "{{ instance_name }}"
+        state: absent
+      register: terminated_instances
+      ignore_errors: true
+
+    - name: Delete security group
+      amazon.aws.ec2_group:
+        name: "{{ security_group }}"
+        region: "{{ region }}"
+        state: absent
+      register: deleted_security_group
+
+
+# ---
+# - name: Deleting EC2 instance and security group
+#   hosts: localhost
+#   connection: local
+#   gather_facts: False
+#   tags: deletion
+#   pre_tasks:
+#     - name: Gather facts
+#       setup:
+#     - name: Install dependencies
+#       pip:
+#         name: "{{ item }}"
+#       loop:
+#         - boto3
+#         - botocore
+#   vars:
+#     aws_region: "us-east-2"
+#     instance_id: "i-1234567890abcdef0"  # Replace with the actual instance ID
+#     security_group_name: "ansible_ec2_security"  # Replace with the actual security group name
+#   tasks:
+#     - name: Delete EC2 instance
+#       amazon.aws.ec2_instance_info:
+#         instance_ids: "{{ instance_id }}"
+#         region: "{{ aws_region }}"
+#       register: instance_info
+#       ignore_errors: true
+
+#     - name: Delete EC2 instance if it exists
+#       when: instance_info.instances | length > 0
+#       amazon.aws.ec2_instance:
+#         state: absent
+#         instance_ids: "{{ instance_id }}"
+#         region: "{{ aws_region }}"
+
+#     - name: Delete security group
+#       amazon.aws.ec2_group_info:
+#         name: "{{ security_group_name }}"
+#         region: "{{ aws_region }}"
+#       register: sg_info
+#       ignore_errors: true
+
+#     - name: Delete security group if it exists
+#       when: sg_info.security_groups | length > 0
+#       amazon.aws.ec2_group:
+#         state: absent
+#         name: "{{ security_group_name }}"
+#         region: "{{ aws_region }}"
+
