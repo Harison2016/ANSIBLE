@@ -15,7 +15,7 @@
         - botocore
   vars:
     aws_region: "us-east-2"
-    instance_id: "i-1234567890abcdef0"  
+    instance_id: "ami-024e6efaf93d85776"  
     security_group_name: "ansible_ec2_security"
   tasks:
     - name: Delete EC2 instance
