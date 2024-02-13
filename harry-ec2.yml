@@ -24,9 +24,9 @@
     group: webserver
     count: 1
     region: us-east-2
-    security_group: ansible_ec2_security
+    security_group: ansible_ec2_create
     tag_name:
-      Name: harry-ec2
+      Name: harry-ec2_ansible
   tasks:
     - name: Create a security group
       amazon.aws.ec2_group:
